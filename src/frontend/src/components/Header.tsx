@@ -1,6 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LogIn, LogOut, Menu, Settings, UserPlus, X } from "lucide-react";
+import {
+  LogIn,
+  LogOut,
+  Menu,
+  Settings,
+  Shield,
+  UserPlus,
+  X,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
@@ -10,6 +18,8 @@ interface HeaderProps {
   isLoggedIn: boolean;
   showAdmin: boolean;
   onToggleAdmin: () => void;
+  onAdminLogout?: () => void;
+  isLocalAdmin?: boolean;
 }
 
 const navLinks = [
@@ -25,6 +35,8 @@ export default function Header({
   isLoggedIn,
   showAdmin,
   onToggleAdmin,
+  onAdminLogout,
+  isLocalAdmin,
 }: HeaderProps) {
   const { login, clear, isLoggingIn } = useInternetIdentity();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -105,16 +117,51 @@ export default function Header({
               </Link>
             ))}
 
-            {isAdmin && (
+            {/* Admin button — always visible */}
+            {isAdmin ? (
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  data-ocid="nav.admin.link"
+                  onClick={onToggleAdmin}
+                  className="px-3 py-1.5 rounded-md text-sm font-medium transition-all"
+                  style={{
+                    color: "oklch(0.78 0.16 75)",
+                    backgroundColor: showAdmin
+                      ? "oklch(0.78 0.16 75 / 0.12)"
+                      : "transparent",
+                  }}
+                >
+                  <Settings className="inline w-4 h-4 mr-1" />
+                  {showAdmin ? "Site Dekhein" : "Admin Panel"}
+                </button>
+                {isLocalAdmin && onAdminLogout && (
+                  <button
+                    type="button"
+                    data-ocid="nav.admin.logout.button"
+                    onClick={onAdminLogout}
+                    className="px-2 py-1.5 rounded-md text-xs font-medium transition-all"
+                    style={{ color: "oklch(0.65 0.1 25)" }}
+                    title="Admin Logout"
+                  >
+                    <LogOut className="inline w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            ) : (
               <button
                 type="button"
                 data-ocid="nav.admin.link"
                 onClick={onToggleAdmin}
-                className="px-3 py-1.5 rounded-md text-sm font-medium transition-all"
-                style={{ color: "oklch(0.78 0.16 75)" }}
+                className="px-3 py-1.5 rounded-md text-sm font-medium transition-all border"
+                style={{
+                  color: "oklch(0.78 0.16 75)",
+                  borderColor: "oklch(0.78 0.16 75 / 0.4)",
+                  backgroundColor: "transparent",
+                }}
               >
-                <Settings className="inline w-4 h-4 mr-1" />
-                {showAdmin ? "View Site" : "Admin"}
+                <Shield className="inline w-4 h-4 mr-1" />
+                Admin Login
               </button>
             )}
 
@@ -227,7 +274,42 @@ export default function Header({
                 </Link>
               ))}
 
-              {isAdmin && (
+              {isAdmin ? (
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    data-ocid="nav.mobile.admin.link"
+                    onClick={() => {
+                      onToggleAdmin();
+                      closeMobile();
+                    }}
+                    className="flex-1 text-sm text-left py-2.5 px-3 rounded-lg"
+                    style={{
+                      color: "oklch(0.78 0.16 75)",
+                      backgroundColor: showAdmin
+                        ? "oklch(0.78 0.16 75 / 0.08)"
+                        : "transparent",
+                    }}
+                  >
+                    <Settings className="inline w-4 h-4 mr-1" />
+                    {showAdmin ? "Site Dekhein" : "Admin Panel"}
+                  </button>
+                  {isLocalAdmin && onAdminLogout && (
+                    <button
+                      type="button"
+                      data-ocid="nav.mobile.admin.logout.button"
+                      onClick={() => {
+                        onAdminLogout();
+                        closeMobile();
+                      }}
+                      className="px-3 py-2.5 rounded-lg text-xs"
+                      style={{ color: "oklch(0.65 0.1 25)" }}
+                    >
+                      <LogOut className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              ) : (
                 <button
                   type="button"
                   data-ocid="nav.mobile.admin.link"
@@ -235,11 +317,14 @@ export default function Header({
                     onToggleAdmin();
                     closeMobile();
                   }}
-                  className="text-sm text-left py-2.5 px-3 rounded-lg"
-                  style={{ color: "oklch(0.78 0.16 75)" }}
+                  className="text-sm text-left py-2.5 px-3 rounded-lg border"
+                  style={{
+                    color: "oklch(0.78 0.16 75)",
+                    borderColor: "oklch(0.78 0.16 75 / 0.35)",
+                  }}
                 >
-                  <Settings className="inline w-4 h-4 mr-1" />
-                  {showAdmin ? "View Site" : "Admin Panel"}
+                  <Shield className="inline w-4 h-4 mr-1" />
+                  Admin Login
                 </button>
               )}
 

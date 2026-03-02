@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { useState } from "react";
 import AIChatbot from "./components/AIChatbot";
+import AdminLoginModal from "./components/AdminLoginModal";
 import AdminPanel from "./components/AdminPanel";
 import ContactSection from "./components/ContactSection";
 import FloatingSocialButtons from "./components/FloatingSocialButtons";
@@ -29,10 +30,11 @@ import { useIsAdmin } from "./hooks/useQueries";
 // ─── Home page ────────────────────────────────────────────────────────────────
 function HomePage() {
   const { data: isAdmin } = useIsAdmin();
+  const isLocalAdmin = localStorage.getItem("nira_admin_auth") === "true";
   return (
     <>
       <HeroSection />
-      <JobsSection isAdmin={!!isAdmin} />
+      <JobsSection isAdmin={!!isAdmin || isLocalAdmin} />
       <ContactSection />
       <Footer />
     </>
@@ -42,18 +44,51 @@ function HomePage() {
 // ─── Root layout (shared shell) ───────────────────────────────────────────────
 function RootLayout() {
   const [showAdmin, setShowAdmin] = useState(false);
-  const { data: isAdmin } = useIsAdmin();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isLocalAdmin, setIsLocalAdmin] = useState(
+    () => localStorage.getItem("nira_admin_auth") === "true",
+  );
+  const { data: isAdminFromICP } = useIsAdmin();
   const { identity } = useInternetIdentity();
+
+  const isAdmin = !!isAdminFromICP || isLocalAdmin;
+
+  const handleLocalAdminLogin = () => {
+    setIsLocalAdmin(true);
+    setShowLoginModal(false);
+    setShowAdmin(true);
+  };
+
+  const handleAdminLogout = () => {
+    localStorage.removeItem("nira_admin_auth");
+    setIsLocalAdmin(false);
+    setShowAdmin(false);
+  };
+
+  const handleToggleAdmin = () => {
+    if (!isAdmin) {
+      setShowLoginModal(true);
+    } else {
+      setShowAdmin((prev) => !prev);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background font-body">
       <Toaster position="top-right" richColors />
       <WhatsAppGroupBanner />
       <Header
-        isAdmin={!!isAdmin}
+        isAdmin={isAdmin}
         isLoggedIn={!!identity}
         showAdmin={showAdmin}
-        onToggleAdmin={() => setShowAdmin((prev) => !prev)}
+        onToggleAdmin={handleToggleAdmin}
+        onAdminLogout={handleAdminLogout}
+        isLocalAdmin={isLocalAdmin}
+      />
+      <AdminLoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onSuccess={handleLocalAdminLogin}
       />
       {showAdmin && isAdmin ? (
         <AdminPanel onClose={() => setShowAdmin(false)} />
