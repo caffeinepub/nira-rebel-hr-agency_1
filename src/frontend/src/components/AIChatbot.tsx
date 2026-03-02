@@ -49,7 +49,7 @@ function getBotResponse(input: string, jobs: Job[]): string {
       q,
     )
   ) {
-    return "🎓 **Education Requirements:**\n\n• **10th Pass**: ATM Operator, Cash Sorter, Loader, Packer, Picker, Metro Delivery\n• **12th Pass**: Floor Coordinator, Credit Card Opening, Token Checker, Customer Service\n• **Graduation Preferred**: Sales Manager, Branch Relationship Executive/Manager, Operations Manager, Branch Manager\n• **Any Graduate**: CASA, Clerk, Team Leader\n\nFresh graduates bhi apply kar sakte hain! Koi experience zaroori nahi kuch roles ke liye. 💪";
+    return "🎓 **Education Requirements:**\n\n• **10th Pass**: ATM Operator, Cash Sorter, Loader, Packer, Picker, Metro Delivery\n• **12th Pass**: Floor Coordinator, Credit Card Opening, Token Checker, Customer Service\n• **Graduation Preferred**: Sales Manager, Branch Relationship Executive/Manager, Operations Manager, Branch Manager\n• **Any Graduate**: Cashier, Clerk, Team Leader\n\nFresh graduates bhi apply kar sakte hain! Koi experience zaroori nahi kuch roles ke liye. 💪";
   }
 
   // Department
@@ -100,7 +100,7 @@ function getBotResponse(input: string, jobs: Job[]): string {
       const list = axisJobs.map((j) => `• ${j.position}`).join("\n");
       return `🏦 **Axis Bank Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 9891331853 📞`;
     }
-    return "🏦 **Axis Bank Vacancies:**\n\n• CASA\n• Loan Department\n• Account Opener\n• Operation Manager\n• Branch Manager\n• Brand Relationship Manager\n• Clerk\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
+    return "🏦 **Axis Bank Vacancies:**\n\n• Cashier\n• Loan Department\n• Account Opener\n• Operation Manager\n• Branch Manager\n• Brand Relationship Manager\n• Clerk\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
   }
 
   // Hitachi

@@ -44,7 +44,7 @@ const departments = [
     icon: Building2,
     color: "oklch(0.6 0.22 270)",
     positions: [
-      "CASA",
+      "Cashier",
       "Loan Department",
       "Account Opener",
       "Operation Manager",

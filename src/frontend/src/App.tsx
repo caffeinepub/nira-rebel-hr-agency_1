@@ -66,8 +66,38 @@ function RootLayout() {
   );
 }
 
+// ─── Not Found fallback ───────────────────────────────────────────────────────
+function NotFoundPage() {
+  return (
+    <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
+      <h2
+        className="text-2xl font-bold mb-2"
+        style={{ color: "oklch(0.88 0.12 80)" }}
+      >
+        Page Not Found
+      </h2>
+      <p className="mb-4" style={{ color: "oklch(0.7 0.05 240)" }}>
+        Yeh page exist nahi karta. Home par wapas jayein.
+      </p>
+      <a
+        href="#/"
+        className="px-4 py-2 rounded font-semibold text-sm"
+        style={{
+          backgroundColor: "oklch(0.78 0.16 75)",
+          color: "oklch(0.12 0.04 250)",
+        }}
+      >
+        Home Par Jayein
+      </a>
+    </div>
+  );
+}
+
 // ─── Route tree ───────────────────────────────────────────────────────────────
-const rootRoute = createRootRoute({ component: RootLayout });
+const rootRoute = createRootRoute({
+  component: RootLayout,
+  notFoundComponent: NotFoundPage,
+});
 
 const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -126,6 +156,7 @@ const hashHistory = createHashHistory();
 const router = createRouter({
   routeTree,
   history: hashHistory,
+  defaultNotFoundComponent: NotFoundPage,
 });
 
 declare module "@tanstack/react-router" {

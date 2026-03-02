@@ -320,7 +320,7 @@ const FALLBACK_JOBS: Job[] = [
   },
   {
     id: BigInt(28),
-    position: "CASA",
+    position: "Cashier",
     company: "Axis Bank",
     department: "Axis Bank",
     location: "Delhi, Gurugram",
