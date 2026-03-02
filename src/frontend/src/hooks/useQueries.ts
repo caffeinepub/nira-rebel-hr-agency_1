@@ -8,9 +8,14 @@ export function useGetAllJobs() {
     queryKey: ["jobs"],
     queryFn: async () => {
       if (!actor) return [];
-      return actor.getAllJobs();
+      try {
+        return await actor.getAllJobs();
+      } catch {
+        return [];
+      }
     },
     enabled: !!actor && !isFetching,
+    retry: 2,
   });
 }
 
@@ -44,9 +49,14 @@ export function useIsAdmin() {
     queryKey: ["isAdmin"],
     queryFn: async () => {
       if (!actor) return false;
-      return actor.isCallerAdmin();
+      try {
+        return await actor.isCallerAdmin();
+      } catch {
+        return false;
+      }
     },
     enabled: !!actor && !isFetching,
+    retry: 1,
   });
 }
 
