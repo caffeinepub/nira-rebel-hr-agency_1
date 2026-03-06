@@ -13,7 +13,7 @@ const socialLinks = [
     id: "whatsapp",
     icon: SiWhatsapp,
     label: "WhatsApp",
-    href: "https://wa.me/919891331853",
+    href: "https://wa.me/917302361451",
     color: "#25D366",
     bgColor: "#25D366",
     ocid: "social.whatsapp.button",

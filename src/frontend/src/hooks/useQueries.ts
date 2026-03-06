@@ -102,3 +102,48 @@ export function useDeleteJob() {
     },
   });
 }
+
+export function useSubmitApplication() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (app: import("../backend.d").CandidateApplication) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.submitApplication(app);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["applications"] });
+    },
+  });
+}
+
+export function useGetAllApplications() {
+  const { actor, isFetching } = useActor();
+  return useQuery<import("../backend.d").CandidateApplication[]>({
+    queryKey: ["applications"],
+    queryFn: async () => {
+      if (!actor) return [];
+      try {
+        return await actor.getAllApplications();
+      } catch {
+        return [];
+      }
+    },
+    enabled: !!actor && !isFetching,
+    retry: 1,
+  });
+}
+
+export function useDeleteApplication() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: bigint) => {
+      if (!actor) throw new Error("Actor not available");
+      return actor.deleteApplication(id);
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["applications"] });
+    },
+  });
+}

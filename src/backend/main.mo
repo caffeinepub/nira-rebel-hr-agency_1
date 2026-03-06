@@ -6,13 +6,18 @@ import Nat "mo:core/Nat";
 import Principal "mo:core/Principal";
 import Runtime "mo:core/Runtime";
 import Order "mo:core/Order";
+import CandidateApp "candidate/application";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
+
+
 
 actor {
   // Initialize the access control state
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
+
+  var candidateAppState = CandidateApp.empty();
 
   public type Job = {
     id : Nat;
@@ -208,5 +213,26 @@ actor {
       Runtime.trap("Job not found, id: " # id.toText());
     };
     jobs.remove(id);
+  };
+
+  // Candidate Application Management - delegate to module
+  public query ({ caller }) func getAllApplications() : async [CandidateApp.CandidateApplication] {
+    if (not AccessControl.hasPermission(accessControlState, caller, #admin)) {
+      Runtime.trap("Unauthorized: Only admins can perform this action");
+    };
+    CandidateApp.getAllApplications(candidateAppState);
+  };
+
+  public shared ({ caller }) func submitApplication(app : CandidateApp.CandidateApplication) : async Nat {
+    let (newId, newState) = CandidateApp.submitApplication(candidateAppState, app);
+    candidateAppState := newState;
+    newId;
+  };
+
+  public shared ({ caller }) func deleteApplication(id : Nat) : async () {
+    if (not AccessControl.hasPermission(accessControlState, caller, #admin)) {
+      Runtime.trap("Unauthorized: Only admins can perform this action");
+    };
+    candidateAppState := CandidateApp.deleteApplication(candidateAppState, id);
   };
 };

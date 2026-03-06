@@ -24,13 +24,38 @@ export const UserRole = IDL.Variant({
   'user' : IDL.Null,
   'guest' : IDL.Null,
 });
+export const CandidateApplication = IDL.Record({
+  'id' : IDL.Nat,
+  'age' : IDL.Text,
+  'subject' : IDL.Text,
+  'resumeBase64' : IDL.Text,
+  'name' : IDL.Text,
+  'submittedAt' : IDL.Text,
+  'email' : IDL.Text,
+  'district' : IDL.Text,
+  'experience' : IDL.Text,
+  'state' : IDL.Text,
+  'preferredLocation' : IDL.Text,
+  'applyingFor' : IDL.Text,
+  'gender' : IDL.Text,
+  'phone' : IDL.Text,
+  'qualification' : IDL.Text,
+  'college' : IDL.Text,
+  'resumeFileName' : IDL.Text,
+});
 export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 
 export const idlService = IDL.Service({
   '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
   'addJob' : IDL.Func([Job], [], []),
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+  'deleteApplication' : IDL.Func([IDL.Nat], [], []),
   'deleteJob' : IDL.Func([IDL.Nat], [], []),
+  'getAllApplications' : IDL.Func(
+      [],
+      [IDL.Vec(CandidateApplication)],
+      ['query'],
+    ),
   'getAllJobs' : IDL.Func([], [IDL.Vec(Job)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
@@ -43,6 +68,7 @@ export const idlService = IDL.Service({
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'submitApplication' : IDL.Func([CandidateApplication], [IDL.Nat], []),
   'updateJob' : IDL.Func([IDL.Nat, Job], [], []),
 });
 
@@ -65,13 +91,38 @@ export const idlFactory = ({ IDL }) => {
     'user' : IDL.Null,
     'guest' : IDL.Null,
   });
+  const CandidateApplication = IDL.Record({
+    'id' : IDL.Nat,
+    'age' : IDL.Text,
+    'subject' : IDL.Text,
+    'resumeBase64' : IDL.Text,
+    'name' : IDL.Text,
+    'submittedAt' : IDL.Text,
+    'email' : IDL.Text,
+    'district' : IDL.Text,
+    'experience' : IDL.Text,
+    'state' : IDL.Text,
+    'preferredLocation' : IDL.Text,
+    'applyingFor' : IDL.Text,
+    'gender' : IDL.Text,
+    'phone' : IDL.Text,
+    'qualification' : IDL.Text,
+    'college' : IDL.Text,
+    'resumeFileName' : IDL.Text,
+  });
   const UserProfile = IDL.Record({ 'name' : IDL.Text });
   
   return IDL.Service({
     '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
     'addJob' : IDL.Func([Job], [], []),
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
+    'deleteApplication' : IDL.Func([IDL.Nat], [], []),
     'deleteJob' : IDL.Func([IDL.Nat], [], []),
+    'getAllApplications' : IDL.Func(
+        [],
+        [IDL.Vec(CandidateApplication)],
+        ['query'],
+      ),
     'getAllJobs' : IDL.Func([], [IDL.Vec(Job)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
@@ -84,6 +135,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'submitApplication' : IDL.Func([CandidateApplication], [IDL.Nat], []),
     'updateJob' : IDL.Func([IDL.Nat, Job], [], []),
   });
 };

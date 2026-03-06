@@ -18,6 +18,7 @@ interface JobCardProps {
   isAdmin: boolean;
   onEdit: (job: Job) => void;
   onDelete: (job: Job) => void;
+  onApply?: (job: Job) => void;
 }
 
 export default function JobCard({
@@ -26,8 +27,19 @@ export default function JobCard({
   isAdmin,
   onEdit,
   onDelete,
+  onApply,
 }: JobCardProps) {
-  const whatsappUrl = `https://wa.me/919891331853?text=Hi, I am interested in the ${encodeURIComponent(job.position)} position at ${encodeURIComponent(job.company)}. Please share more details.`;
+  const handleApply = () => {
+    if (onApply) {
+      onApply(job);
+    } else {
+      // Fallback: scroll to apply form
+      const applySection = document.getElementById("apply");
+      if (applySection) {
+        applySection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <motion.div
@@ -124,17 +136,16 @@ export default function JobCard({
 
       {/* Actions */}
       <div className="px-5 pb-5 flex items-center gap-2">
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={handleApply}
           data-ocid={`jobs.apply.button.${index + 1}`}
           className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-md text-sm font-semibold transition-all hover:opacity-90 hover:shadow-md"
           style={{ backgroundColor: "#25D366", color: "#fff" }}
         >
           <MessageCircle className="w-4 h-4" />
           Apply Now
-        </a>
+        </button>
 
         {isAdmin && (
           <>

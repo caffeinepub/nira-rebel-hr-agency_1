@@ -7,10 +7,11 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import AIChatbot from "./components/AIChatbot";
 import AdminLoginModal from "./components/AdminLoginModal";
 import AdminPanel from "./components/AdminPanel";
+import ApplyFormSection from "./components/ApplyFormSection";
 import ContactSection from "./components/ContactSection";
 import FloatingSocialButtons from "./components/FloatingSocialButtons";
 import Footer from "./components/Footer";
@@ -31,10 +32,29 @@ import { useIsAdmin } from "./hooks/useQueries";
 function HomePage() {
   const { data: isAdmin } = useIsAdmin();
   const isLocalAdmin = localStorage.getItem("nira_admin_auth") === "true";
+  const [prefilledJob, setPrefilledJob] = useState("");
+
+  const handleApplyJob = useCallback((jobTitle: string) => {
+    setPrefilledJob(jobTitle);
+    setTimeout(() => {
+      const applySection = document.getElementById("apply");
+      if (applySection) {
+        applySection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 50);
+  }, []);
+
   return (
     <>
       <HeroSection />
-      <JobsSection isAdmin={!!isAdmin || isLocalAdmin} />
+      <JobsSection
+        isAdmin={!!isAdmin || isLocalAdmin}
+        onApplyJob={handleApplyJob}
+      />
+      <ApplyFormSection
+        prefilledJob={prefilledJob}
+        onJobUsed={() => setPrefilledJob("")}
+      />
       <ContactSection />
       <Footer />
     </>

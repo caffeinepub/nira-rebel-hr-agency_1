@@ -89,6 +89,25 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface CandidateApplication {
+    id: bigint;
+    age: string;
+    subject: string;
+    resumeBase64: string;
+    name: string;
+    submittedAt: string;
+    email: string;
+    district: string;
+    experience: string;
+    state: string;
+    preferredLocation: string;
+    applyingFor: string;
+    gender: string;
+    phone: string;
+    qualification: string;
+    college: string;
+    resumeFileName: string;
+}
 export interface Job {
     id: bigint;
     salary: bigint;
@@ -112,7 +131,9 @@ export interface backendInterface {
     _initializeAccessControlWithSecret(userSecret: string): Promise<void>;
     addJob(newJob: Job): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
+    deleteApplication(id: bigint): Promise<void>;
     deleteJob(id: bigint): Promise<void>;
+    getAllApplications(): Promise<Array<CandidateApplication>>;
     getAllJobs(): Promise<Array<Job>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
@@ -121,6 +142,7 @@ export interface backendInterface {
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     isCallerAdmin(): Promise<boolean>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    submitApplication(app: CandidateApplication): Promise<bigint>;
     updateJob(id: bigint, updatedJob: Job): Promise<void>;
 }
 import type { UserProfile as _UserProfile, UserRole as _UserRole } from "./declarations/backend.did.d.ts";
@@ -168,6 +190,20 @@ export class Backend implements backendInterface {
             return result;
         }
     }
+    async deleteApplication(arg0: bigint): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.deleteApplication(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.deleteApplication(arg0);
+            return result;
+        }
+    }
     async deleteJob(arg0: bigint): Promise<void> {
         if (this.processError) {
             try {
@@ -179,6 +215,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.deleteJob(arg0);
+            return result;
+        }
+    }
+    async getAllApplications(): Promise<Array<CandidateApplication>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllApplications();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllApplications();
             return result;
         }
     }
@@ -291,6 +341,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.saveCallerUserProfile(arg0);
+            return result;
+        }
+    }
+    async submitApplication(arg0: CandidateApplication): Promise<bigint> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.submitApplication(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.submitApplication(arg0);
             return result;
         }
     }

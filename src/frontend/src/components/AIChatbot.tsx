@@ -33,9 +33,9 @@ function getBotResponse(input: string, jobs: Job[]): string {
     if (activeSalaries.length > 0) {
       const minSal = Math.min(...activeSalaries);
       const maxSal = Math.max(...activeSalaries);
-      return `💰 **Salary Information:**\n\nHamare jobs mein salary ₹${minSal.toLocaleString("en-IN")} se lekar ₹${maxSal.toLocaleString("en-IN")} per month tak hai, position aur experience ke according.\n\n• Banking roles (SBI, PNB, Axis): ₹18,000–₹45,000/month\n• ATM/Cash roles (Hitachi): ₹15,000–₹28,000/month\n• E-Commerce (Blinkit, Zepto, Swiggy): ₹12,000–₹22,000/month\n• Metro roles: ₹16,000–₹35,000/month\n\nExact salary jaanne ke liye WhatsApp karein: +91 9891331853 📞`;
+      return `💰 **Salary Information:**\n\nHamare jobs mein salary ₹${minSal.toLocaleString("en-IN")} se lekar ₹${maxSal.toLocaleString("en-IN")} per month tak hai, position aur experience ke according.\n\n• Banking roles (SBI, PNB, Axis): ₹18,000–₹45,000/month\n• ATM/Cash roles (Hitachi): ₹15,000–₹28,000/month\n• E-Commerce (Blinkit, Zepto, Swiggy): ₹12,000–₹22,000/month\n• Metro roles: ₹16,000–₹35,000/month\n\nExact salary jaanne ke liye WhatsApp karein: +91 7302361451 📞`;
     }
-    return "💰 Salary details ke liye WhatsApp karein: +91 9891331853. Banking roles mein ₹18,000–₹45,000/month, ATM roles mein ₹15,000–₹28,000/month milte hain. 📞";
+    return "💰 Salary details ke liye WhatsApp karein: +91 7302361451. Banking roles mein ₹18,000–₹45,000/month, ATM roles mein ₹15,000–₹28,000/month milte hain. 📞";
   }
 
   // Age
@@ -59,9 +59,9 @@ function getBotResponse(input: string, jobs: Job[]): string {
     ];
     if (departments.length > 0) {
       const deptList = departments.map((d) => `• ${d}`).join("\n");
-      return `🏢 **Available Departments:**\n\n${deptList}\n\nSab departments mein abhi vacancies hain! Kisi bhi department ke liye apply karein. 📞 WhatsApp: +91 9891331853`;
+      return `🏢 **Available Departments:**\n\n${deptList}\n\nSab departments mein abhi vacancies hain! Kisi bhi department ke liye apply karein. 📞 WhatsApp: +91 7302361451`;
     }
-    return "🏢 Hamare paas SBI Bank, PNB Bank, Axis Bank, Hitachi Cash Management, Blinkit/Zepto/Swiggy, aur Metro department mein vacancies hain! Details ke liye WhatsApp: +91 9891331853";
+    return "🏢 Hamare paas SBI Bank, PNB Bank, Axis Bank, Hitachi Cash Management, Blinkit/Zepto/Swiggy, aur Metro department mein vacancies hain! Details ke liye WhatsApp: +91 7302361451";
   }
 
   // SBI Bank
@@ -76,9 +76,14 @@ function getBotResponse(input: string, jobs: Job[]): string {
             `• ${j.position} — ₹${Number(j.salary).toLocaleString("en-IN")}/month`,
         )
         .join("\n");
-      return `🏦 **SBI Bank Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 9891331853 📞`;
+      return `🏦 **SBI Bank Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 7302361451 📞`;
     }
-    return "🏦 **SBI Bank Vacancies:**\n\n• Floor Coordinator\n• Floor Coordinator Team Leader\n• ATM Executive Operator\n• Credit Card Opening\n• Sales Manager\n• Branch Relationship Executive\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
+    return "🏦 **SBI Bank Vacancies:**\n\n• Floor Coordinator\n• Floor Coordinator Team Leader\n• ATM Executive Operator\n• Credit Card Opening\n• Sales Manager\n• Branch Relationship Executive\n\nApply karne ke liye WhatsApp: +91 7302361451 📞";
+  }
+
+  // Bank of Baroda
+  if (/bob|bank of baroda|baroda|credit card sales|bob credit/.test(q)) {
+    return "🏦 **Bank of Baroda – URGENT BULK HIRING!**\n\n🔥 BOB Credit Card Sales (Branch Setting)\n\n📋 Details:\n• Job Role: Credit Card Sales in Branch\n• Interview Date: **06-03-2026 (Friday)**\n• Interview Location: **Gurugram**\n• Job Location: Gurugram, Faridabad, Palwal, Manesar, Noida Sector-65\n\n💰 Salary:\n• CTC: ₹21,000–₹26,000\n• In-Hand: ₹15,000–₹22,000 + PF + ESI + Incentives\n\n📚 Qualification: 12th Pass or Graduate\n⏱️ Experience: Min 6 months Credit Card/Loan Sales\n\n✅ No Daily Reporting | Branch Sitting Job | Free Placement\n\n**Apply karein: WhatsApp 7302361451** 📞";
   }
 
   // PNB Bank
@@ -88,9 +93,9 @@ function getBotResponse(input: string, jobs: Job[]): string {
     );
     if (pnbJobs.length > 0) {
       const list = pnbJobs.map((j) => `• ${j.position}`).join("\n");
-      return `🏦 **PNB Bank Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 9891331853 📞`;
+      return `🏦 **PNB Bank Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 7302361451 📞`;
     }
-    return "🏦 **PNB Bank Vacancies:**\n\n• Credit Card Opening\n• Sales Manager\n• Branch Relationship Executive\n• Branch Relationship Manager\n• Clerk\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
+    return "🏦 **PNB Bank Vacancies:**\n\n• Credit Card Opening\n• Sales Manager\n• Branch Relationship Executive\n• Branch Relationship Manager\n• Clerk\n\nApply karne ke liye WhatsApp: +91 7302361451 📞";
   }
 
   // Axis Bank
@@ -98,9 +103,9 @@ function getBotResponse(input: string, jobs: Job[]): string {
     const axisJobs = jobs.filter((j) => j.isActive && /axis/i.test(j.company));
     if (axisJobs.length > 0) {
       const list = axisJobs.map((j) => `• ${j.position}`).join("\n");
-      return `🏦 **Axis Bank Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 9891331853 📞`;
+      return `🏦 **Axis Bank Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 7302361451 📞`;
     }
-    return "🏦 **Axis Bank Vacancies:**\n\n• Cashier\n• Loan Department\n• Account Opener\n• Operation Manager\n• Branch Manager\n• Brand Relationship Manager\n• Clerk\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
+    return "🏦 **Axis Bank Vacancies:**\n\n• Cashier\n• Loan Department\n• Account Opener\n• Operation Manager\n• Branch Manager\n• Brand Relationship Manager\n• Clerk\n\nApply karne ke liye WhatsApp: +91 7302361451 📞";
   }
 
   // Hitachi
@@ -110,9 +115,9 @@ function getBotResponse(input: string, jobs: Job[]): string {
     );
     if (hitachiJobs.length > 0) {
       const list = hitachiJobs.map((j) => `• ${j.position}`).join("\n");
-      return `🏧 **Hitachi Cash Management Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 9891331853 📞`;
+      return `🏧 **Hitachi Cash Management Vacancies:**\n\n${list}\n\nApply karne ke liye WhatsApp: +91 7302361451 📞`;
     }
-    return "🏧 **Hitachi Cash Management Vacancies:**\n\n• ATM Operator\n• TOM Operator\n• MST\n• Cash Sorter\n• Reporter\n• Team Leader\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
+    return "🏧 **Hitachi Cash Management Vacancies:**\n\n• ATM Operator\n• TOM Operator\n• MST\n• Cash Sorter\n• Reporter\n• Team Leader\n\nApply karne ke liye WhatsApp: +91 7302361451 📞";
   }
 
   // E-Commerce / Blinkit / Zepto / Swiggy / Flipkart / Amazon
@@ -121,12 +126,12 @@ function getBotResponse(input: string, jobs: Job[]): string {
       q,
     )
   ) {
-    return "📦 **E-Commerce Vacancies (Blinkit, Zepto, Swiggy, Flipkart, Amazon):**\n\n• Picker\n• Packer\n• Mover\n• Inventory Associate\n• Putter\n• Loader\n• And more...\n\nLocations: Delhi, Gurugram, Noida aur aas-paas\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
+    return "📦 **E-Commerce Vacancies (Blinkit, Zepto, Swiggy, Flipkart, Amazon):**\n\n• Picker\n• Packer\n• Mover\n• Inventory Associate\n• Putter\n• Loader\n• And more...\n\nLocations: Delhi, Gurugram, Noida aur aas-paas\n\nApply karne ke liye WhatsApp: +91 7302361451 📞";
   }
 
   // Metro
   if (/metro/.test(q)) {
-    return "🚇 **Metro Department Vacancies:**\n\n• TOM Operator\n• Metro Delivery\n• Customer Service\n• Security Guard\n• House Cleaner\n• House Cleaner Team Leader\n• Fare Man\n\nLocations: Delhi, Gurugram\n\nApply karne ke liye WhatsApp: +91 9891331853 📞";
+    return "🚇 **Metro Department Vacancies:**\n\n• TOM Operator\n• Metro Delivery\n• Customer Service\n• Security Guard\n• House Cleaner\n• House Cleaner Team Leader\n• Fare Man\n\nLocations: Delhi, Gurugram\n\nApply karne ke liye WhatsApp: +91 7302361451 📞";
   }
 
   // Apply / How to apply / Contact / WhatsApp
@@ -135,7 +140,7 @@ function getBotResponse(input: string, jobs: Job[]): string {
       q,
     )
   ) {
-    return "📋 **Apply Karne Ka Tarika:**\n\n1️⃣ WhatsApp karein: **+91 9891331853**\n2️⃣ Email karein: **rebelhrjobs1451@gmail.com**\n3️⃣ WhatsApp Group join karein\n4️⃣ Office visit karein:\n   38, Central Ave, Pocket C, Raju Park, Sangam Vihar, New Delhi - 110080\n\n⏰ Timing: Monday–Saturday, 10 AM – 6 PM\n\nApna naam, position aur location batayein, hum aapko guide karenge! 😊";
+    return "📋 **Apply Karne Ka Tarika:**\n\n1️⃣ **Online Form bharein** — Website par 'Apply Now' section mein jaayein\n2️⃣ WhatsApp karein: **+91 7302361451** (resume bhejein)\n3️⃣ Email karein: **rebelhrjobs1451@gmail.com**\n4️⃣ WhatsApp Group join karein\n5️⃣ Office visit karein:\n   38, Central Ave, Pocket C, Raju Park, Sangam Vihar, New Delhi - 110080\n\n⏰ Timing: Monday–Saturday, 10 AM – 6 PM\n\nApna naam, position aur location batayein, hum aapko guide karenge! 😊";
   }
 
   // Location
@@ -144,7 +149,7 @@ function getBotResponse(input: string, jobs: Job[]): string {
       q,
     )
   ) {
-    return "📍 **Job Locations:**\n\n**NCR Region:**\n• Delhi\n• Gurugram\n• Sonipat\n• Rewari\n• Farrukhnagar\n\n**UP/Other:**\n• Agra\n• Etawah\n• Uttar Pradesh (various cities)\n\n**Bihar:**\n• Patna\n• Bihar (various cities)\n\n✅ **Pan India** positions bhi available hain!\n\nApni preferred location batayein: +91 9891331853 📞";
+    return "📍 **Job Locations:**\n\n**NCR Region:**\n• Delhi\n• Gurugram\n• Sonipat\n• Rewari\n• Farrukhnagar\n\n**UP/Other:**\n• Agra\n• Etawah\n• Uttar Pradesh (various cities)\n\n**Bihar:**\n• Patna\n• Bihar (various cities)\n\n✅ **Pan India** positions bhi available hain!\n\nApni preferred location batayein: +91 7302361451 📞";
   }
 
   // All Jobs / Vacancy / Opening
@@ -167,40 +172,40 @@ function getBotResponse(input: string, jobs: Job[]): string {
             `**${company}:** ${cJobs.map((j) => j.position).join(", ")}`,
         )
         .join("\n");
-      return `💼 **Current Job Vacancies (${activeJobs.length} positions):**\n\n${summary}\n\n...aur bhi positions available hain!\n\nKisi bhi job ke liye apply karein: +91 9891331853 📞`;
+      return `💼 **Current Job Vacancies (${activeJobs.length} positions):**\n\n${summary}\n\n...aur bhi positions available hain!\n\nKisi bhi job ke liye apply karein: +91 7302361451 📞`;
     }
-    return "💼 **Current Vacancies:**\n\nSBI Bank, PNB Bank, Axis Bank, Hitachi, E-Commerce (Blinkit/Zepto/Swiggy), aur Metro mein bahut saari vacancies hain!\n\nComplete list ke liye WhatsApp: +91 9891331853 📞";
+    return "💼 **Current Vacancies:**\n\nSBI Bank, PNB Bank, Axis Bank, Hitachi, E-Commerce (Blinkit/Zepto/Swiggy), aur Metro mein bahut saari vacancies hain!\n\nComplete list ke liye WhatsApp: +91 7302361451 📞";
   }
 
   // ATM specific
   if (/atm|cash load|cash sorter|tom operator/.test(q)) {
-    return "🏧 **ATM Related Jobs:**\n\n• **ATM Executive Operator** (SBI Bank)\n• **ATM Operator** (Hitachi) — ATM maintenance & servicing\n• **TOM Operator** (Hitachi) — Cash loading & management\n• **Cash Sorter** (Hitachi) — Currency sorting\n• **TOM Operator** (Metro)\n\nEligibility: 10th pass, age 18–40 years\nSalary: ₹15,000–₹28,000/month\n\nApply: +91 9891331853 📞";
+    return "🏧 **ATM Related Jobs:**\n\n• **ATM Executive Operator** (SBI Bank)\n• **ATM Operator** (Hitachi) — ATM maintenance & servicing\n• **TOM Operator** (Hitachi) — Cash loading & management\n• **Cash Sorter** (Hitachi) — Currency sorting\n• **TOM Operator** (Metro)\n\nEligibility: 10th pass, age 18–40 years\nSalary: ₹15,000–₹28,000/month\n\nApply: +91 7302361451 📞";
   }
 
   // Credit Card
   if (/credit card|card opening/.test(q)) {
-    return "💳 **Credit Card Opening Jobs:**\n\nYeh field sales job hai jisme aap customers ko credit card open karne mein help karte hain.\n\n• **SBI Bank** — Credit Card Opening\n• **PNB Bank** — Credit Card Opening\n\n📋 Requirements:\n• 12th pass minimum\n• Good communication skills\n• Age 18–35 years\n• Salary: ₹18,000–₹25,000 + incentives\n\nApply: +91 9891331853 📞";
+    return "💳 **Credit Card Opening Jobs:**\n\nYeh field sales job hai jisme aap customers ko credit card open karne mein help karte hain.\n\n• **SBI Bank** — Credit Card Opening\n• **PNB Bank** — Credit Card Opening\n\n📋 Requirements:\n• 12th pass minimum\n• Good communication skills\n• Age 18–35 years\n• Salary: ₹18,000–₹25,000 + incentives\n\nApply: +91 7302361451 📞";
   }
 
   // Sales Manager
   if (/sales manager|sales|branch manager|relationship/.test(q)) {
-    return "📊 **Sales & Relationship Roles:**\n\n• **Sales Manager** (SBI, PNB Banks)\n• **Branch Relationship Executive** (SBI, PNB, Axis)\n• **Branch Relationship Manager** (PNB, Axis)\n• **Brand Relationship Manager** (Axis)\n\n📋 Requirements:\n• Graduation preferred\n• Good communication & sales skills\n• Age 21–35 years\n• Salary: ₹22,000–₹45,000/month + incentives\n\nApply: +91 9891331853 📞";
+    return "📊 **Sales & Relationship Roles:**\n\n• **Sales Manager** (SBI, PNB Banks)\n• **Branch Relationship Executive** (SBI, PNB, Axis)\n• **Branch Relationship Manager** (PNB, Axis)\n• **Brand Relationship Manager** (Axis)\n\n📋 Requirements:\n• Graduation preferred\n• Good communication & sales skills\n• Age 21–35 years\n• Salary: ₹22,000–₹45,000/month + incentives\n\nApply: +91 7302361451 📞";
   }
 
   // Documents required
   if (/document|id proof|aadhar|pan card|photo|certificate|papers/.test(q)) {
-    return "📄 **Required Documents:**\n\n• Aadhar Card (mandatory)\n• PAN Card\n• 10th/12th Marksheet\n• Graduation Certificate (if applicable)\n• Passport Size Photos (2–4)\n• Bank Account Details\n• Police Verification Certificate (for some roles)\n\nSab documents ki self-attested photocopy lekar aayein.\n\nInterview ke liye contact karein: +91 9891331853 📞";
+    return "📄 **Required Documents:**\n\n• Aadhar Card (mandatory)\n• PAN Card\n• 10th/12th Marksheet\n• Graduation Certificate (if applicable)\n• Passport Size Photos (2–4)\n• Bank Account Details\n• Police Verification Certificate (for some roles)\n\nSab documents ki self-attested photocopy lekar aayein.\n\nInterview ke liye contact karein: +91 7302361451 📞";
   }
 
   // Office / Address
   if (
     /office|address|kahan hai|location of office|visit|headquarters/.test(q)
   ) {
-    return "🏢 **Office Address:**\n\nNira Rebel HR Agency Pvt Ltd\n38, Central Ave, Pocket C,\nRaju Park, Sangam Vihar,\nNew Delhi, Delhi 110080\n\n📞 Phone: +91 9891331853\n📧 Email: rebelhrjobs1451@gmail.com\n\n⏰ Office Hours: Monday–Saturday, 10 AM – 6 PM";
+    return "🏢 **Office Address:**\n\nNira Rebel HR Agency Pvt Ltd\n38, Central Ave, Pocket C,\nRaju Park, Sangam Vihar,\nNew Delhi, Delhi 110080\n\n📞 Phone: +91 7302361451\n📧 Email: rebelhrjobs1451@gmail.com\n\n⏰ Office Hours: Monday–Saturday, 10 AM – 6 PM";
   }
 
   // Default fallback
-  return "🤔 Mujhe samajh nahi aaya. Kripya in topics mein se koi ek puchein:\n\n• **Jobs/Vacancies** — available positions\n• **Salary** — pay details\n• **Age Limit** — eligibility\n• **Education** — qualification needed\n• **How to Apply** — application process\n• **Location** — job cities\n• **Company** — SBI, PNB, Axis, Hitachi, etc.\n\nYa seedha WhatsApp karein: **+91 9891331853** 📞";
+  return "🤔 Mujhe samajh nahi aaya. Kripya in topics mein se koi ek puchein:\n\n• **Jobs/Vacancies** — available positions\n• **Salary** — pay details\n• **Age Limit** — eligibility\n• **Education** — qualification needed\n• **How to Apply** — application process\n• **Location** — job cities\n• **Company** — SBI, PNB, Axis, Hitachi, etc.\n\nYa seedha WhatsApp karein: **+91 7302361451** 📞";
 }
 
 // ─── Quick Reply Chips ────────────────────────────────────────────────────────

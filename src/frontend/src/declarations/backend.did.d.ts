@@ -10,6 +10,25 @@ import type { ActorMethod } from '@icp-sdk/core/agent';
 import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
+export interface CandidateApplication {
+  'id' : bigint,
+  'age' : string,
+  'subject' : string,
+  'resumeBase64' : string,
+  'name' : string,
+  'submittedAt' : string,
+  'email' : string,
+  'district' : string,
+  'experience' : string,
+  'state' : string,
+  'preferredLocation' : string,
+  'applyingFor' : string,
+  'gender' : string,
+  'phone' : string,
+  'qualification' : string,
+  'college' : string,
+  'resumeFileName' : string,
+}
 export interface Job {
   'id' : bigint,
   'salary' : bigint,
@@ -29,7 +48,9 @@ export interface _SERVICE {
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
   'addJob' : ActorMethod<[Job], undefined>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
+  'deleteApplication' : ActorMethod<[bigint], undefined>,
   'deleteJob' : ActorMethod<[bigint], undefined>,
+  'getAllApplications' : ActorMethod<[], Array<CandidateApplication>>,
   'getAllJobs' : ActorMethod<[], Array<Job>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
@@ -38,6 +59,7 @@ export interface _SERVICE {
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'submitApplication' : ActorMethod<[CandidateApplication], bigint>,
   'updateJob' : ActorMethod<[bigint, Job], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;

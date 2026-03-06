@@ -396,23 +396,38 @@ const FALLBACK_JOBS: Job[] = [
       "Handle daily banking transactions, data entry, customer service.",
     isActive: true,
   },
+  // Bank of Baroda
+  {
+    id: BigInt(35),
+    position: "BOB Credit Card Sales",
+    company: "Bank of Baroda",
+    department: "Bank of Baroda",
+    location: "Gurugram, Faridabad, Palwal, Manesar, Noida Sector-65",
+    address: "Interview Location: Gurugram | Job: Noida Sector-65",
+    salary: BigInt(23500),
+    description:
+      "URGENT BULK HIRING | Branch Setting Job | No Daily Reporting | Male & Female Both Welcome\n\nJob Role: Credit Card Sales in Branch\nInterview Date: 06-03-2026 (Friday)\nInterview Location: Gurugram\nJob Location: Gurugram, Faridabad, Palwal, Manesar, Noida Sector-65\n\nSalary: ₹21,000–₹26,000 CTC + ₹15,000–₹22,000 In-Hand + PF + ESI + Incentives\nQualification: 12th Pass or Graduate\nExperience: Minimum 6 months in Credit Card or Loan Sales\n\nFree Job Placement | Branch Sitting Job\nTo Apply: WhatsApp resume to 7302361451",
+    isActive: true,
+  },
 ];
 
 const DEPARTMENT_FILTERS = [
   "All",
+  "Bank of Baroda",
   "SBI Bank",
   "PNB Bank",
+  "Axis Bank",
   "Hitachi Cash Management",
   "E-Commerce / Logistics",
   "Metro Department",
-  "Axis Bank",
 ];
 
 interface JobsSectionProps {
   isAdmin: boolean;
+  onApplyJob?: (jobTitle: string) => void;
 }
 
-export default function JobsSection({ isAdmin }: JobsSectionProps) {
+export default function JobsSection({ isAdmin, onApplyJob }: JobsSectionProps) {
   const { data: backendJobs, isLoading, isError } = useGetAllJobs();
   // Use backend jobs when available, fallback to static list on error or empty
   const jobs =
@@ -499,6 +514,16 @@ export default function JobsSection({ isAdmin }: JobsSectionProps) {
   const openDelete = (job: Job) => {
     setDeleteJob(job);
     setDeleteOpen(true);
+  };
+
+  const handleApply = (job: Job) => {
+    if (onApplyJob) {
+      onApplyJob(`${job.position} - ${job.company}`);
+    }
+    const applySection = document.getElementById("apply");
+    if (applySection) {
+      applySection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const isSubmitting = addMutation.isPending || updateMutation.isPending;
@@ -643,6 +668,7 @@ export default function JobsSection({ isAdmin }: JobsSectionProps) {
                 isAdmin={isAdmin}
                 onEdit={openEdit}
                 onDelete={openDelete}
+                onApply={handleApply}
               />
             ))}
           </div>

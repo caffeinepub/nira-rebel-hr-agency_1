@@ -11,7 +11,7 @@ const socialLinks = [
   {
     icon: SiWhatsapp,
     label: "WhatsApp",
-    href: "https://wa.me/919891331853",
+    href: "https://wa.me/917302361451",
     color: "#25D366",
   },
   {
@@ -74,7 +74,7 @@ export default function ContactSection() {
         <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Phone */}
           <motion.a
-            href="tel:9891331853"
+            href="tel:7302361451"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -106,7 +106,7 @@ export default function ContactSection() {
               className="font-bold text-lg"
               style={{ color: "oklch(0.98 0 0)" }}
             >
-              9891331853
+              7302361451
             </p>
             <p
               className="text-xs mt-1 group-hover:text-gold transition-colors"
