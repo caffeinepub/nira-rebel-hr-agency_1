@@ -7,211 +7,80 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
-import AIChatbot from "./components/AIChatbot";
-import AdminLoginModal from "./components/AdminLoginModal";
-import AdminPanel from "./components/AdminPanel";
-import ApplyFormSection from "./components/ApplyFormSection";
-import ContactSection from "./components/ContactSection";
-import FloatingSocialButtons from "./components/FloatingSocialButtons";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import HeroSection from "./components/HeroSection";
-import JobsSection from "./components/JobsSection";
-import WhatsAppGroupBanner from "./components/WhatsAppGroupBanner";
-import AboutPage from "./components/pages/AboutPage";
-import BlogsPage from "./components/pages/BlogsPage";
-import CandidatesPage from "./components/pages/CandidatesPage";
-import LoginPage from "./components/pages/LoginPage";
-import ServicesPage from "./components/pages/ServicesPage";
-import SignupPage from "./components/pages/SignupPage";
-import { useInternetIdentity } from "./hooks/useInternetIdentity";
-import { useIsAdmin } from "./hooks/useQueries";
 
-// ─── Home page ────────────────────────────────────────────────────────────────
-function HomePage() {
-  const { data: isAdmin } = useIsAdmin();
-  const isLocalAdmin = localStorage.getItem("nira_admin_auth") === "true";
-  const [prefilledJob, setPrefilledJob] = useState("");
-
-  const handleApplyJob = useCallback((jobTitle: string) => {
-    setPrefilledJob(jobTitle);
-    setTimeout(() => {
-      const applySection = document.getElementById("apply");
-      if (applySection) {
-        applySection.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 50);
-  }, []);
-
+function SitePaused() {
   return (
-    <>
-      <HeroSection />
-      <JobsSection
-        isAdmin={!!isAdmin || isLocalAdmin}
-        onApplyJob={handleApplyJob}
-      />
-      <ApplyFormSection
-        prefilledJob={prefilledJob}
-        onJobUsed={() => setPrefilledJob("")}
-      />
-      <ContactSection />
-      <Footer />
-    </>
-  );
-}
-
-// ─── Root layout (shared shell) ───────────────────────────────────────────────
-function RootLayout() {
-  const [showAdmin, setShowAdmin] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isLocalAdmin, setIsLocalAdmin] = useState(
-    () => localStorage.getItem("nira_admin_auth") === "true",
-  );
-  const { data: isAdminFromICP } = useIsAdmin();
-  const { identity } = useInternetIdentity();
-
-  const isAdmin = !!isAdminFromICP || isLocalAdmin;
-
-  const handleLocalAdminLogin = () => {
-    setIsLocalAdmin(true);
-    setShowLoginModal(false);
-    setShowAdmin(true);
-  };
-
-  const handleAdminLogout = () => {
-    localStorage.removeItem("nira_admin_auth");
-    setIsLocalAdmin(false);
-    setShowAdmin(false);
-  };
-
-  const handleToggleAdmin = () => {
-    if (!isAdmin) {
-      setShowLoginModal(true);
-    } else {
-      setShowAdmin((prev) => !prev);
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-background font-body">
+    <div
+      className="min-h-screen flex flex-col items-center justify-center text-center px-6"
+      style={{ background: "oklch(0.12 0.04 250)" }}
+    >
       <Toaster position="top-right" richColors />
-      <WhatsAppGroupBanner />
-      <Header
-        isAdmin={isAdmin}
-        isLoggedIn={!!identity}
-        showAdmin={showAdmin}
-        onToggleAdmin={handleToggleAdmin}
-        onAdminLogout={handleAdminLogout}
-        isLocalAdmin={isLocalAdmin}
-      />
-      <AdminLoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSuccess={handleLocalAdminLogin}
-      />
-      {showAdmin && isAdmin ? (
-        <AdminPanel onClose={() => setShowAdmin(false)} />
-      ) : (
-        <Outlet />
-      )}
-      <FloatingSocialButtons />
-      <AIChatbot />
-    </div>
-  );
-}
-
-// ─── Not Found fallback ───────────────────────────────────────────────────────
-function NotFoundPage() {
-  return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-      <h2
-        className="text-2xl font-bold mb-2"
-        style={{ color: "oklch(0.88 0.12 80)" }}
-      >
-        Page Not Found
-      </h2>
-      <p className="mb-4" style={{ color: "oklch(0.7 0.05 240)" }}>
-        Yeh page exist nahi karta. Home par wapas jayein.
-      </p>
-      <a
-        href="#/"
-        className="px-4 py-2 rounded font-semibold text-sm"
+      <div
+        className="rounded-2xl p-10 max-w-md w-full shadow-2xl"
         style={{
-          backgroundColor: "oklch(0.78 0.16 75)",
-          color: "oklch(0.12 0.04 250)",
+          background: "oklch(0.18 0.05 250)",
+          border: "1px solid oklch(0.3 0.06 250)",
         }}
       >
-        Home Par Jayein
-      </a>
+        <div className="mb-6">
+          <img
+            src="/assets/uploads/WhatsApp-Image-2026-03-02-at-6.45.04-PM-1-1.jpeg"
+            alt="Nira Rebel HR Agency"
+            className="h-20 w-auto mx-auto object-contain rounded-lg"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
+          />
+        </div>
+        <h1
+          className="text-2xl font-bold mb-3"
+          style={{ color: "oklch(0.88 0.12 80)" }}
+        >
+          Nira Rebel HR Agency
+        </h1>
+        <div
+          className="inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4"
+          style={{ background: "oklch(0.55 0.18 25)", color: "white" }}
+        >
+          Website Abhi Band Hai
+        </div>
+        <p className="text-base mb-2" style={{ color: "oklch(0.75 0.05 240)" }}>
+          Hum jald hi wapas aayenge.
+        </p>
+        <p className="text-sm" style={{ color: "oklch(0.55 0.04 240)" }}>
+          We will be back soon. Thank you for your patience.
+        </p>
+        <div
+          className="mt-8 pt-6"
+          style={{ borderTop: "1px solid oklch(0.28 0.05 250)" }}
+        >
+          <p className="text-xs" style={{ color: "oklch(0.45 0.04 240)" }}>
+            38, Central Ave, Pocket C, Raju Park, Sangam Vihar, New Delhi, Delhi
+            110080
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
 
-// ─── Route tree ───────────────────────────────────────────────────────────────
-const rootRoute = createRootRoute({
-  component: RootLayout,
-  notFoundComponent: NotFoundPage,
-});
+const rootRoute = createRootRoute({ component: Outlet });
 
-const homeRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: HomePage,
-});
-
-const servicesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/services",
-  component: ServicesPage,
-});
-
-const aboutRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/about",
-  component: AboutPage,
-});
-
-const candidatesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/candidates",
-  component: CandidatesPage,
-});
-
-const blogsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/blogs",
-  component: BlogsPage,
-});
-
-const signupRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/signup",
-  component: SignupPage,
-});
-
-const loginRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/login",
-  component: LoginPage,
-});
-
-const routeTree = rootRoute.addChildren([
-  homeRoute,
-  servicesRoute,
-  aboutRoute,
-  candidatesRoute,
-  blogsRoute,
-  signupRoute,
-  loginRoute,
-]);
-
-const hashHistory = createHashHistory();
+const makeRoute = (path: string) =>
+  createRoute({ getParentRoute: () => rootRoute, path, component: SitePaused });
 
 const router = createRouter({
-  routeTree,
-  history: hashHistory,
-  defaultNotFoundComponent: NotFoundPage,
+  routeTree: rootRoute.addChildren([
+    makeRoute("/"),
+    makeRoute("/services"),
+    makeRoute("/about"),
+    makeRoute("/candidates"),
+    makeRoute("/blogs"),
+    makeRoute("/signup"),
+    makeRoute("/login"),
+  ]),
+  history: createHashHistory(),
+  defaultNotFoundComponent: SitePaused,
 });
 
 declare module "@tanstack/react-router" {

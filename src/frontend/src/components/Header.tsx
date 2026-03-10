@@ -117,7 +117,7 @@ export default function Header({
               </Link>
             ))}
 
-            {/* Admin button — always visible */}
+            {/* Admin button */}
             {isAdmin ? (
               <div className="flex items-center gap-1">
                 <button
@@ -167,7 +167,7 @@ export default function Header({
 
             <div className="flex items-center gap-2 ml-2">
               {!isLoggedIn && (
-                <Link to="/signup">
+                <a href="#/signup">
                   <Button
                     data-ocid="nav.signup.button"
                     variant="outline"
@@ -182,7 +182,7 @@ export default function Header({
                     <UserPlus className="w-3 h-3 mr-1" />
                     Register
                   </Button>
-                </Link>
+                </a>
               )}
 
               {isLoggedIn ? (
@@ -202,7 +202,7 @@ export default function Header({
                   Logout
                 </Button>
               ) : (
-                <Link to="/login">
+                <a href="#/login">
                   <Button
                     data-ocid="nav.login.button"
                     size="sm"
@@ -217,7 +217,7 @@ export default function Header({
                     <LogIn className="w-3 h-3 mr-1" />
                     {isLoggingIn ? "Logging in..." : "Login"}
                   </Button>
-                </Link>
+                </a>
               )}
             </div>
           </nav>
@@ -333,7 +333,8 @@ export default function Header({
                 style={{ borderColor: "oklch(0.25 0.05 255)" }}
               >
                 {!isLoggedIn && (
-                  <Link to="/signup" onClick={closeMobile}>
+                  // biome-ignore lint/a11y/useValidAnchor: hash routing
+                  <a href="#/signup" onClick={closeMobile}>
                     <Button
                       data-ocid="nav.mobile.signup.button"
                       variant="outline"
@@ -348,7 +349,7 @@ export default function Header({
                       <UserPlus className="w-3 h-3 mr-1" />
                       Register as Candidate
                     </Button>
-                  </Link>
+                  </a>
                 )}
 
                 {isLoggedIn ? (
@@ -371,7 +372,8 @@ export default function Header({
                     Logout
                   </Button>
                 ) : (
-                  <Link to="/login" onClick={closeMobile}>
+                  // biome-ignore lint/a11y/useValidAnchor: hash routing
+                  <a href="#/login" onClick={closeMobile}>
                     <Button
                       data-ocid="nav.mobile.login.button"
                       size="sm"
@@ -384,7 +386,7 @@ export default function Header({
                       <LogIn className="w-3 h-3 mr-1" />
                       Login
                     </Button>
-                  </Link>
+                  </a>
                 )}
               </div>
             </div>
