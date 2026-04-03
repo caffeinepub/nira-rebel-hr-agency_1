@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import type { Job } from "../backend.d";
 import { useGetAllJobs } from "../hooks/useQueries";
 import { useAddJob, useDeleteJob, useUpdateJob } from "../hooks/useQueries";
+import ApplyNowModal from "./ApplyNowModal";
 import DeleteJobDialog from "./DeleteJobDialog";
 import JobCard from "./JobCard";
 import JobFormModal from "./JobFormModal";
@@ -406,13 +407,123 @@ const FALLBACK_JOBS: Job[] = [
     address: "Interview Location: Gurugram | Job: Noida Sector-65",
     salary: BigInt(23500),
     description:
-      "URGENT BULK HIRING | Branch Setting Job | No Daily Reporting | Male & Female Both Welcome\n\nJob Role: Credit Card Sales in Branch\nInterview Date: 06-03-2026 (Friday)\nInterview Location: Gurugram\nJob Location: Gurugram, Faridabad, Palwal, Manesar, Noida Sector-65\n\nSalary: ₹21,000–₹26,000 CTC + ₹15,000–₹22,000 In-Hand + PF + ESI + Incentives\nQualification: 12th Pass or Graduate\nExperience: Minimum 6 months in Credit Card or Loan Sales\n\nFree Job Placement | Branch Sitting Job\nTo Apply: WhatsApp resume to 7302361451",
+      "URGENT BULK HIRING | Branch Setting Job | No Daily Reporting | Male & Female Both Welcome\n\nJob Role: Credit Card Sales in Branch\nInterview Date: 06-03-2026 (Friday)\nInterview Location: Gurugram\nJob Location: Gurugram, Faridabad, Palwal, Manesar, Noida Sector-65\n\nSalary: ₹21,000–₹26,000 CTC + ₹15,000–₹22,000 In-Hand + PF + ESI + Incentives\nQualification: 12th Pass or Graduate\nExperience: Minimum 6 months in Credit Card or Loan Sales\n\nFree Job Placement | Branch Sitting Job\nTo Apply: WhatsApp resume to 9031863042",
+    isActive: true,
+  },
+  // Ranchi Local Jobs
+  {
+    id: BigInt(36),
+    position: "Safai Karamchari (Housekeeping) - Female",
+    company: "Office, Lalpur Ranchi",
+    department: "Ranchi Local",
+    location: "Lalpur, Ranchi",
+    address: "Lalpur, Ranchi, Jharkhand",
+    salary: BigInt(8000),
+    description:
+      "ऑफिस में साफ सफाई का काम | सुबह 10 बजे से शाम 6 बजे तक ड्यूटी | संडे छुट्टी\n\nSalary: ₹8,000 (starting) | Freshers can apply | Only female candidates\n\nअधिक जानकारी के लिए संपर्क करें",
+    isActive: true,
+  },
+  {
+    id: BigInt(37),
+    position: "Computer Operator (Fresher)",
+    company: "Office, Lalpur Chowk Ranchi",
+    department: "Ranchi Local",
+    location: "Lalpur Chowk, Ranchi",
+    address: "Lalpur Chowk, Ranchi, Jharkhand",
+    salary: BigInt(10000),
+    description:
+      "Requirement of 1 Fresher Computer Operator\n\nSalary: ₹9,000 - ₹11,000 | Timing: 10 hrs (Sunday off)\nSkills Required: Tally, Excel\nFreshers (Girls & Boys) can apply\n\nContact for more information",
+    isActive: true,
+  },
+  {
+    id: BigInt(38),
+    position: "Female Receptionist - Gym",
+    company: "Gym, Harmu Ranchi",
+    department: "Ranchi Local",
+    location: "Harmu, Ranchi",
+    address: "Harmu, Ranchi, Jharkhand",
+    salary: BigInt(9500),
+    description:
+      "Requirement of 1 Female Receptionist in a Gym\n\nSalary: ₹9,000 - ₹10,000 | Timing: 7 hrs (6am to 3pm) | Week off\nExperienced & Fresher both can apply\nMust have good communication skills with basic computer knowledge\n\nContact for more information",
+    isActive: true,
+  },
+  {
+    id: BigInt(39),
+    position: "Chinese Cook",
+    company: "Restaurant, Ranchi",
+    department: "Ranchi Local",
+    location: "Ranchi, Jharkhand",
+    address: "Ranchi, Jharkhand",
+    salary: BigInt(17000),
+    description:
+      "रांची में चाइनीज कुक की आवश्यकता है\n\nSalary: ₹16,000 - ₹18,000 | रहने खाने की सुविधा मुफ्त में\n\nअधिक जानकारी के लिए संपर्क करें",
+    isActive: true,
+  },
+  {
+    id: BigInt(40),
+    position: "Fast Food Cook",
+    company: "Food Stall / Restaurant, Ranchi",
+    department: "Ranchi Local",
+    location: "Ranchi, Jharkhand",
+    address: "Ranchi, Jharkhand",
+    salary: BigInt(20000),
+    description:
+      "रांची में फास्ट फूड कुक की आवश्यकता है\nSpecialization: छोले भटूरे, समोसा, और अन्य फास्ट फूड\n\nSalary: ₹20,000 तक\n\nअधिक जानकारी के लिए संपर्क करें",
+    isActive: true,
+  },
+  {
+    id: BigInt(41),
+    position: "House Helper - Female",
+    company: "Private Home, Bariatu Ranchi",
+    department: "Ranchi Local",
+    location: "Bariatu, Ranchi",
+    address: "Bariatu, Ranchi, Jharkhand",
+    salary: BigInt(11000),
+    description:
+      "बरियातू, रांची में एक घर में घर का छोटा बड़ा काम में मदद करने के लिए एक लड़की की जरूरत है\n\nSalary: ₹10,000 - ₹12,000 (starting) | रहने खाने की सुविधा मुफ्त में\n\nअधिक जानकारी के लिए संपर्क करें",
+    isActive: true,
+  },
+  {
+    id: BigInt(42),
+    position: "Shop Girl Staff - Female",
+    company: "Dukaan, Sujata Chowk Ranchi",
+    department: "Ranchi Local",
+    location: "Sujata Chowk, Ranchi",
+    address: "Sujata Chowk, Ranchi, Jharkhand",
+    salary: BigInt(7500),
+    description:
+      "सुजाता चौक, रांची में एक दुकान में लड़की स्टाफ की जरूरत है\n\nSalary: ₹7,000 - ₹8,000 (starting) | Timing: 10am to 7pm (Sunday off)\nFreshers can apply\n\nअधिक जानकारी के लिए संपर्क करें",
+    isActive: true,
+  },
+  {
+    id: BigInt(43),
+    position: "Money Collection Executive",
+    company: "Office, Upper Bazar Ranchi",
+    department: "Ranchi Local",
+    location: "Upper Bazar, Ranchi",
+    address: "Upper Bazar, Ranchi, Jharkhand",
+    salary: BigInt(14000),
+    description:
+      "Requirement of 1 Person for Money Collection (Non Target Work)\n\nSalary: ₹13,000 - ₹15,000 + Fuel Expenses | Timing: 9 hrs (Sunday off)\nMust have Motorcycle | Freshers can apply\n\nContact for more information",
+    isActive: true,
+  },
+  {
+    id: BigInt(44),
+    position: "Male Accountant",
+    company: "Office, Kadru Ranchi",
+    department: "Ranchi Local",
+    location: "Kadru, Ranchi",
+    address: "Kadru, Ranchi, Jharkhand",
+    salary: BigInt(15500),
+    description:
+      "Requirement of 1 Male Accountant\n\nSalary: ₹13,000 - ₹18,000 + Lodging Facilities (as per interview)\nTiming: 10 hrs (Sunday off)\nKnowledge in Tally & Excel required\n\nContact for more information",
     isActive: true,
   },
 ];
 
 const DEPARTMENT_FILTERS = [
   "All",
+  "Ranchi Local",
   "Bank of Baroda",
   "SBI Bank",
   "PNB Bank",
@@ -444,6 +555,10 @@ export default function JobsSection({ isAdmin, onApplyJob }: JobsSectionProps) {
   // Delete dialog
   const [deleteJob, setDeleteJob] = useState<Job | null>(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
+
+  // Apply Now Modal
+  const [applyModalOpen, setApplyModalOpen] = useState(false);
+  const [applyJobTitle, setApplyJobTitle] = useState("");
 
   const addMutation = useAddJob();
   const updateMutation = useUpdateJob();
@@ -517,13 +632,10 @@ export default function JobsSection({ isAdmin, onApplyJob }: JobsSectionProps) {
   };
 
   const handleApply = (job: Job) => {
-    if (onApplyJob) {
-      onApplyJob(`${job.position} - ${job.company}`);
-    }
-    const applySection = document.getElementById("apply");
-    if (applySection) {
-      applySection.scrollIntoView({ behavior: "smooth" });
-    }
+    const title = `${job.position} - ${job.company}`;
+    setApplyJobTitle(title);
+    setApplyModalOpen(true);
+    if (onApplyJob) onApplyJob(title);
   };
 
   const isSubmitting = addMutation.isPending || updateMutation.isPending;
@@ -572,8 +684,8 @@ export default function JobsSection({ isAdmin, onApplyJob }: JobsSectionProps) {
             className="text-sm md:text-base max-w-lg mx-auto"
             style={{ color: "oklch(0.5 0.02 240)" }}
           >
-            Explore opportunities across top companies and departments. Apply
-            directly via WhatsApp.
+            Explore opportunities across top companies. Click "Apply Now" to
+            submit your application directly.
           </p>
         </motion.div>
 
@@ -740,6 +852,13 @@ export default function JobsSection({ isAdmin, onApplyJob }: JobsSectionProps) {
         }}
         onConfirm={handleDeleteConfirm}
         isLoading={deleteMutation.isPending}
+      />
+
+      {/* Apply Now Modal */}
+      <ApplyNowModal
+        isOpen={applyModalOpen}
+        onClose={() => setApplyModalOpen(false)}
+        jobTitle={applyJobTitle}
       />
     </section>
   );

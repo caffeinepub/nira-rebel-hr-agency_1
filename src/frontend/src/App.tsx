@@ -7,80 +7,150 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router";
+import { useState } from "react";
+import AIChatbot from "./components/AIChatbot";
+import AdminLoginModal from "./components/AdminLoginModal";
+import AdminPanel from "./components/AdminPanel";
+import ApplyFormSection from "./components/ApplyFormSection";
+import ContactSection from "./components/ContactSection";
+import ErrorBoundary from "./components/ErrorBoundary";
+import FloatingSocialButtons from "./components/FloatingSocialButtons";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import JobsSection from "./components/JobsSection";
+import WhatsAppGroupBanner from "./components/WhatsAppGroupBanner";
+import AboutPage from "./components/pages/AboutPage";
+import BlogsPage from "./components/pages/BlogsPage";
+import CandidatesPage from "./components/pages/CandidatesPage";
+import LoginPage from "./components/pages/LoginPage";
+import ServicesPage from "./components/pages/ServicesPage";
+import SignupPage from "./components/pages/SignupPage";
 
-function SitePaused() {
+function SiteLayout() {
+  const [isLocalAdmin, setIsLocalAdmin] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+
+  const handleAdminToggle = () => {
+    if (isLocalAdmin) {
+      setShowAdmin((p) => !p);
+    } else {
+      setShowAdminModal(true);
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsLocalAdmin(false);
+    setShowAdmin(false);
+  };
+
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center text-center px-6"
-      style={{ background: "oklch(0.12 0.04 250)" }}
-    >
+    <ErrorBoundary>
       <Toaster position="top-right" richColors />
-      <div
-        className="rounded-2xl p-10 max-w-md w-full shadow-2xl"
-        style={{
-          background: "oklch(0.18 0.05 250)",
-          border: "1px solid oklch(0.3 0.06 250)",
-        }}
-      >
-        <div className="mb-6">
-          <img
-            src="/assets/uploads/WhatsApp-Image-2026-03-02-at-6.45.04-PM-1-1.jpeg"
-            alt="Nira Rebel HR Agency"
-            className="h-20 w-auto mx-auto object-contain rounded-lg"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
+      {showAdmin && isLocalAdmin ? (
+        <AdminPanel onClose={() => setShowAdmin(false)} />
+      ) : (
+        <div
+          className="min-h-screen flex flex-col"
+          style={{ backgroundColor: "oklch(0.12 0.04 258)" }}
+        >
+          <Header
+            isAdmin={isLocalAdmin}
+            isLoggedIn={false}
+            showAdmin={showAdmin}
+            onToggleAdmin={handleAdminToggle}
+            onAdminLogout={handleAdminLogout}
+            isLocalAdmin={isLocalAdmin}
           />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <Footer />
+          <FloatingSocialButtons />
+          <AIChatbot />
         </div>
-        <h1
-          className="text-2xl font-bold mb-3"
-          style={{ color: "oklch(0.88 0.12 80)" }}
-        >
-          Nira Rebel HR Agency
-        </h1>
-        <div
-          className="inline-block px-4 py-1 rounded-full text-sm font-semibold mb-4"
-          style={{ background: "oklch(0.55 0.18 25)", color: "white" }}
-        >
-          Website Abhi Band Hai
-        </div>
-        <p className="text-base mb-2" style={{ color: "oklch(0.75 0.05 240)" }}>
-          Hum jald hi wapas aayenge.
-        </p>
-        <p className="text-sm" style={{ color: "oklch(0.55 0.04 240)" }}>
-          We will be back soon. Thank you for your patience.
-        </p>
-        <div
-          className="mt-8 pt-6"
-          style={{ borderTop: "1px solid oklch(0.28 0.05 250)" }}
-        >
-          <p className="text-xs" style={{ color: "oklch(0.45 0.04 240)" }}>
-            38, Central Ave, Pocket C, Raju Park, Sangam Vihar, New Delhi, Delhi
-            110080
-          </p>
-        </div>
-      </div>
-    </div>
+      )}
+      <AdminLoginModal
+        isOpen={showAdminModal}
+        onClose={() => setShowAdminModal(false)}
+        onSuccess={() => {
+          setIsLocalAdmin(true);
+          setShowAdmin(true);
+          setShowAdminModal(false);
+        }}
+      />
+    </ErrorBoundary>
   );
 }
 
-const rootRoute = createRootRoute({ component: Outlet });
+function HomePage() {
+  return (
+    <>
+      <HeroSection />
+      <WhatsAppGroupBanner />
+      <JobsSection isAdmin={false} />
+      <ApplyFormSection />
+      <ContactSection />
+    </>
+  );
+}
 
-const makeRoute = (path: string) =>
-  createRoute({ getParentRoute: () => rootRoute, path, component: SitePaused });
+const rootRoute = createRootRoute({ component: SiteLayout });
+
+const homeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: HomePage,
+});
+
+const servicesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/services",
+  component: ServicesPage,
+});
+
+const aboutRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/about",
+  component: AboutPage,
+});
+
+const candidatesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/candidates",
+  component: CandidatesPage,
+});
+
+const blogsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/blogs",
+  component: BlogsPage,
+});
+
+const signupRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/signup",
+  component: SignupPage,
+});
+
+const loginRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/login",
+  component: LoginPage,
+});
 
 const router = createRouter({
   routeTree: rootRoute.addChildren([
-    makeRoute("/"),
-    makeRoute("/services"),
-    makeRoute("/about"),
-    makeRoute("/candidates"),
-    makeRoute("/blogs"),
-    makeRoute("/signup"),
-    makeRoute("/login"),
+    homeRoute,
+    servicesRoute,
+    aboutRoute,
+    candidatesRoute,
+    blogsRoute,
+    signupRoute,
+    loginRoute,
   ]),
   history: createHashHistory(),
-  defaultNotFoundComponent: SitePaused,
 });
 
 declare module "@tanstack/react-router" {

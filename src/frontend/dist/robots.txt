@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nira-rebel-hr-agency-cqj.caffeine.xyz/sitemap.xml

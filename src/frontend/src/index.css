@@ -1,0 +1,239 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Nira Rebel HR - Navy Blue + Gold palette */
+    --background: 0.97 0.005 240;
+    --foreground: 0.15 0.02 250;
+
+    --card: 1 0 0;
+    --card-foreground: 0.15 0.02 250;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.15 0.02 250;
+
+    /* Primary: Deep Navy Blue */
+    --primary: 0.2 0.06 255;
+    --primary-foreground: 0.99 0 0;
+
+    /* Secondary: Light gold tint */
+    --secondary: 0.96 0.018 75;
+    --secondary-foreground: 0.2 0.06 255;
+
+    --muted: 0.94 0.01 240;
+    --muted-foreground: 0.5 0.02 240;
+
+    /* Accent: Gold/Amber */
+    --accent: 0.78 0.16 75;
+    --accent-foreground: 0.12 0.04 250;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.01 240;
+    --input: 0.88 0.01 240;
+    --ring: 0.4 0.1 255;
+
+    --chart-1: 0.78 0.16 75;
+    --chart-2: 0.55 0.18 255;
+    --chart-3: 0.65 0.12 200;
+    --chart-4: 0.75 0.14 140;
+    --chart-5: 0.6 0.2 30;
+
+    --sidebar: 0.18 0.05 255;
+    --sidebar-foreground: 0.95 0 0;
+    --sidebar-primary: 0.78 0.16 75;
+    --sidebar-primary-foreground: 0.12 0.04 250;
+    --sidebar-accent: 0.28 0.06 255;
+    --sidebar-accent-foreground: 0.95 0 0;
+    --sidebar-border: 0.3 0.05 255;
+    --sidebar-ring: 0.78 0.16 75;
+
+    /* Brand-specific custom tokens */
+    --navy: 0.18 0.06 255;
+    --navy-dark: 0.12 0.06 258;
+    --navy-mid: 0.25 0.06 255;
+    --gold: 0.78 0.16 75;
+    --gold-light: 0.88 0.12 80;
+    --gold-dark: 0.62 0.18 65;
+
+    /* Chatbot tokens */
+    --chatbot-primary: 0.18 0.06 255;
+    --chatbot-primary-hover: 0.24 0.07 255;
+    --chatbot-accent: 0.78 0.16 75;
+    --chatbot-bg: 0.96 0.005 240;
+    --chatbot-bot-bg: 0.92 0.02 255;
+    --chatbot-bot-text: 0.15 0.04 255;
+    --chatbot-user-bg: 0.78 0.16 75;
+    --chatbot-user-text: 0.12 0.04 250;
+  }
+
+  .dark {
+    --background: 0.12 0.04 255;
+    --foreground: 0.95 0 0;
+
+    --card: 0.18 0.05 255;
+    --card-foreground: 0.95 0 0;
+
+    --popover: 0.22 0.05 255;
+    --popover-foreground: 0.95 0 0;
+
+    --primary: 0.78 0.16 75;
+    --primary-foreground: 0.12 0.04 250;
+
+    --secondary: 0.25 0.05 255;
+    --secondary-foreground: 0.95 0 0;
+
+    --muted: 0.25 0.05 255;
+    --muted-foreground: 0.65 0.02 240;
+
+    --accent: 0.78 0.16 75;
+    --accent-foreground: 0.12 0.04 250;
+
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.95 0 0;
+
+    --border: 1 0 0 / 10%;
+    --input: 1 0 0 / 15%;
+    --ring: 0.78 0.16 75;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Georgia", "Palatino Linotype", "Book Antiqua", serif;
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Georgia", "Palatino Linotype", serif;
+  }
+
+  .font-body {
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  }
+
+  .text-gold {
+    color: oklch(var(--gold));
+  }
+
+  .text-navy {
+    color: oklch(var(--navy));
+  }
+
+  .bg-navy {
+    background-color: oklch(var(--navy));
+  }
+
+  .bg-navy-dark {
+    background-color: oklch(var(--navy-dark));
+  }
+
+  .bg-gold {
+    background-color: oklch(var(--gold));
+  }
+
+  .border-gold {
+    border-color: oklch(var(--gold));
+  }
+
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.12 0.06 258) 0%,
+      oklch(0.18 0.06 255) 40%,
+      oklch(0.22 0.07 250) 100%
+    );
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(
+      90deg,
+      oklch(0.78 0.16 75) 0%,
+      oklch(0.88 0.12 80) 50%,
+      oklch(0.78 0.16 75) 100%
+    );
+  }
+
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px oklch(0.18 0.06 255 / 0.15);
+  }
+
+  .floating-social {
+    position: fixed;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  @keyframes pulse-gold {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 oklch(0.78 0.16 75 / 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 8px oklch(0.78 0.16 75 / 0);
+    }
+  }
+
+  .pulse-gold {
+    animation: pulse-gold 2s infinite;
+  }
+
+  @keyframes float-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-float-up {
+    animation: float-up 0.5s ease-out forwards;
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.4s ease-out forwards;
+  }
+}

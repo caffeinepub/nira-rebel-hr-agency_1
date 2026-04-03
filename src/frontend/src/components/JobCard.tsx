@@ -6,6 +6,7 @@ import {
   Edit,
   IndianRupee,
   MapPin,
+  Send,
   Trash2,
 } from "lucide-react";
 import { motion } from "motion/react";
@@ -26,7 +27,7 @@ export default function JobCard({
   isAdmin,
   onEdit,
   onDelete,
-  // onApply is kept in the interface for backward compatibility but not used
+  onApply,
 }: JobCardProps) {
   return (
     <motion.div
@@ -121,37 +122,56 @@ export default function JobCard({
         )}
       </div>
 
-      {/* Admin-only actions */}
-      {isAdmin && (
-        <div className="px-5 pb-5 flex items-center gap-2">
+      {/* Action row */}
+      <div className="px-5 pb-5 flex items-center gap-2">
+        {/* Apply Now button - always visible for non-admin */}
+        {!isAdmin && onApply && (
           <Button
-            data-ocid={`jobs.edit.button.${index + 1}`}
+            data-ocid={`jobs.apply.button.${index + 1}`}
             size="sm"
-            variant="outline"
-            onClick={() => onEdit(job)}
-            className="px-3"
+            className="flex-1 gap-1.5 font-semibold text-xs"
+            onClick={() => onApply(job)}
             style={{
-              borderColor: "oklch(0.78 0.16 75 / 0.5)",
-              color: "oklch(0.55 0.16 65)",
+              backgroundColor: "oklch(0.18 0.06 255)",
+              color: "oklch(0.99 0 0)",
             }}
           >
-            <Edit className="w-3.5 h-3.5" />
+            <Send className="w-3.5 h-3.5" />
+            Apply Now
           </Button>
-          <Button
-            data-ocid={`jobs.delete.button.${index + 1}`}
-            size="sm"
-            variant="outline"
-            onClick={() => onDelete(job)}
-            className="px-3"
-            style={{
-              borderColor: "oklch(0.577 0.245 27.325 / 0.5)",
-              color: "oklch(0.577 0.245 27.325)",
-            }}
-          >
-            <Trash2 className="w-3.5 h-3.5" />
-          </Button>
-        </div>
-      )}
+        )}
+        {/* Admin-only actions */}
+        {isAdmin && (
+          <>
+            <Button
+              data-ocid={`jobs.edit.button.${index + 1}`}
+              size="sm"
+              variant="outline"
+              onClick={() => onEdit(job)}
+              className="px-3"
+              style={{
+                borderColor: "oklch(0.78 0.16 75 / 0.5)",
+                color: "oklch(0.55 0.16 65)",
+              }}
+            >
+              <Edit className="w-3.5 h-3.5" />
+            </Button>
+            <Button
+              data-ocid={`jobs.delete.button.${index + 1}`}
+              size="sm"
+              variant="outline"
+              onClick={() => onDelete(job)}
+              className="px-3"
+              style={{
+                borderColor: "oklch(0.577 0.245 27.325 / 0.5)",
+                color: "oklch(0.577 0.245 27.325)",
+              }}
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+            </Button>
+          </>
+        )}
+      </div>
     </motion.div>
   );
 }

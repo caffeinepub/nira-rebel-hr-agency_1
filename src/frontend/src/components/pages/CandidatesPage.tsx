@@ -7,20 +7,21 @@ import {
   Building2,
   IndianRupee,
   MapPin,
-  MessageCircle,
   Search,
+  Send,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { useMemo, useState } from "react";
 import type { Job } from "../../backend.d";
 import { useGetAllJobs, useGetDepartments } from "../../hooks/useQueries";
+import ApplyNowModal from "../ApplyNowModal";
 import Footer from "../Footer";
 
-function JobCard({ job, index }: { job: Job; index: number }) {
-  const whatsappMsg = encodeURIComponent(
-    `Hi, I'm interested in the "${job.position}" position at ${job.company} (${job.department}). Please share more details.`,
-  );
-
+function JobCard({
+  job,
+  index,
+  onApply,
+}: { job: Job; index: number; onApply: (job: Job) => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -28,7 +29,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
       viewport={{ once: true }}
       transition={{ delay: Math.min(index * 0.05, 0.3) }}
       data-ocid={`candidates.item.${index + 1}`}
-      className="rounded-xl overflow-hidden border bg-white hover:shadow-lg transition-all group"
+      className="rounded-xl overflow-hidden border bg-white hover:shadow-lg transition-all group flex flex-col"
       style={{ borderColor: "oklch(0.88 0.01 240)" }}
     >
       {/* Top bar */}
@@ -40,7 +41,7 @@ function JobCard({ job, index }: { job: Job; index: number }) {
         }}
       />
 
-      <div className="p-5">
+      <div className="p-5 flex-1">
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex-1 min-w-0">
             <h3
@@ -103,24 +104,21 @@ function JobCard({ job, index }: { job: Job; index: number }) {
             </p>
           )}
         </div>
+      </div>
 
-        <a
-          href={`https://wa.me/919891331853?text=${whatsappMsg}`}
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="px-5 pb-5">
+        <Button
+          className="w-full text-sm font-semibold gap-2 group-hover:opacity-90 transition-opacity"
           data-ocid={`candidates.apply.button.${index + 1}`}
+          onClick={() => onApply(job)}
+          style={{
+            backgroundColor: "oklch(0.18 0.06 255)",
+            color: "#fff",
+          }}
         >
-          <Button
-            className="w-full text-sm font-semibold gap-2 group-hover:opacity-90 transition-opacity"
-            style={{
-              backgroundColor: "#25D366",
-              color: "#fff",
-            }}
-          >
-            <MessageCircle className="w-4 h-4" />
-            Apply via WhatsApp
-          </Button>
-        </a>
+          <Send className="w-4 h-4" />
+          Apply Now
+        </Button>
       </div>
     </motion.div>
   );
@@ -131,6 +129,8 @@ export default function CandidatesPage() {
   const { data: departments } = useGetDepartments();
   const [activeFilter, setActiveFilter] = useState("All");
   const [search, setSearch] = useState("");
+  const [applyModalOpen, setApplyModalOpen] = useState(false);
+  const [applyJobTitle, setApplyJobTitle] = useState("");
 
   const filters = useMemo(() => ["All", ...(departments ?? [])], [departments]);
 
@@ -152,6 +152,11 @@ export default function CandidatesPage() {
     }
     return list;
   }, [jobs, activeFilter, search]);
+
+  const handleApply = (job: Job) => {
+    setApplyJobTitle(`${job.position} - ${job.company}`);
+    setApplyModalOpen(true);
+  };
 
   return (
     <div
@@ -193,8 +198,8 @@ export default function CandidatesPage() {
               className="text-base md:text-lg max-w-xl mx-auto"
               style={{ color: "oklch(0.78 0.04 240)" }}
             >
-              Browse all open positions across our partner companies. Apply
-              directly via WhatsApp for fast response.
+              Browse all open positions. Click "Apply Now" and fill the form --
+              we'll contact you directly.
             </p>
           </motion.div>
         </div>
@@ -291,7 +296,12 @@ export default function CandidatesPage() {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredJobs.map((job, idx) => (
-                  <JobCard key={job.id.toString()} job={job} index={idx} />
+                  <JobCard
+                    key={job.id.toString()}
+                    job={job}
+                    index={idx}
+                    onApply={handleApply}
+                  />
                 ))}
               </div>
             </>
@@ -352,10 +362,11 @@ export default function CandidatesPage() {
             Don't see your ideal role?
           </h3>
           <p className="text-sm mb-6" style={{ color: "oklch(0.72 0.03 240)" }}>
-            Contact us directly on WhatsApp — we may have unadvertised openings.
+            Contact us directly on WhatsApp -- we may have unadvertised
+            openings.
           </p>
           <a
-            href="https://wa.me/919891331853?text=Hi, I'm looking for a job. Can you help me?"
+            href="https://wa.me/919031863042?text=Hi, I'm looking for a job. Can you help me?"
             target="_blank"
             rel="noopener noreferrer"
             data-ocid="candidates.whatsapp.button"
@@ -368,7 +379,7 @@ export default function CandidatesPage() {
                 color: "oklch(0.12 0.04 250)",
               }}
             >
-              <MessageCircle className="w-5 h-5" />
+              <Send className="w-5 h-5" />
               Message Us on WhatsApp
             </Button>
           </a>
@@ -376,6 +387,13 @@ export default function CandidatesPage() {
       </section>
 
       <Footer />
+
+      {/* Apply Now Modal */}
+      <ApplyNowModal
+        isOpen={applyModalOpen}
+        onClose={() => setApplyModalOpen(false)}
+        jobTitle={applyJobTitle}
+      />
     </div>
   );
 }
